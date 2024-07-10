@@ -2,15 +2,40 @@ import React, { useState } from "react";
 import background from "../../assets/background.avif";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [Username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle login logic here
-    console.log("Email:", email);
-    console.log("Password:", password);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const data = {
+    username: Username,  // assuming 'Username' is a state variable
+    password: password  // assuming 'password' is a state variable
   };
+
+  try {
+    const response = await fetch('http://localhost:8000/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log('Login successful:', responseData);
+      // Handle successful login (e.g., redirect to a different page)
+    } else {
+      console.error('Login failed:', response.statusText);
+      // Handle login failure (e.g., show an error message)
+    }
+  } catch (error) {
+    console.error('Error during login:', error);
+    // Handle network or other errors
+  }
+};
+
 
   return (
     <div
@@ -25,15 +50,15 @@ const Login = () => {
         <h2 className="text-2xl font-bold mb-6 text-center">Gym Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2" htmlFor="email">
-              Email
+            <label className="block text-gray-700 mb-2" htmlFor="Username">
+              Username
             </label>
             <input
-              type="email"
-              id="email"
+              type="Username"
+              id="Username"
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={Username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>

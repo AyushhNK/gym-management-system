@@ -6,13 +6,36 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle registration logic here
-    console.log("Name:", name);
-    console.log("Email:", email);
-    console.log("Password:", password);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const data = {
+    username: name,  // assuming 'Username' is a state variable
+    password: password  // assuming 'password' is a state variable
   };
+
+  try {
+    const response = await fetch('http://localhost:8000/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log('Registration successful:', responseData);
+      // Handle successful register (e.g., redirect to a different page)
+    } else {
+      console.error('Registration failed:', response.statusText);
+      // Handle register failure (e.g., show an error message)
+    }
+  } catch (error) {
+    console.error('Error during register:', error);
+    // Handle network or other errors
+  }
+};
 
   return (
     <div

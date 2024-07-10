@@ -8,8 +8,8 @@ function App() {
   return (
     <>
       <Navbar/>
-      <Login/> 
-      {/* <Register/> */}
+      {/* <Login/>  */}
+      <Register/> 
     </>
   )
 }
