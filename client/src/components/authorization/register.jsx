@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import background from "../../assets/background.avif";
+import Navbar from '../NavFoo/Navbar'
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -38,6 +39,7 @@ const Register = () => {
 };
 
   return (
+    <>
     <div
       className="min-h-screen flex items-center justify-center bg-gray-100"
       style={{
@@ -97,6 +99,7 @@ const Register = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 

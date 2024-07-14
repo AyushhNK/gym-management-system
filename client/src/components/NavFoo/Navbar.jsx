@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import LoginContext from '../contexts/logincontext';
+import {Link} from 'react-router-dom'
 
 const Navbar = () => {
+  const { data, setData } = useContext(LoginContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -14,16 +17,27 @@ const Navbar = () => {
           <div className="flex-shrink-0">
             <div className="flex items-center">
               <span className="text-3xl font-bold text-white">
-                <span className="text-green-500">F</span>lex
-                <span className="text-red-500">N</span>ation
+                <Link to="/">
+                  <span className="text-green-500">F</span>lex
+                  <span className="text-red-500">N</span>ation
+                </Link>
               </span>
             </div>
           </div>
           <div className="hidden md:flex">
             {/* Navigation links */}
             <div className="ml-4 flex space-x-4">
-              <a href="#services" className="text-white hover:text-gray-400 px-3 py-2 rounded-md text-xl font-medium">Login</a>
-              <a href="#contact" className="text-white hover:text-gray-400 px-3 py-2 rounded-md text-xl font-medium">Signup</a>
+              {data == null ? (
+                <>
+                  <a href="/login" className="text-white hover:text-gray-400 px-3 py-2 rounded-md text-xl font-medium">Login</a>
+                  <a href="/signup" className="text-white hover:text-gray-400 px-3 py-2 rounded-md text-xl font-medium">Signup</a>
+                </>
+              ) : (
+                <>
+                  <Link to="/profile" className="text-white hover:text-gray-400 px-3 py-2 rounded-md text-xl font-medium">{data.Username}</Link>
+                  <a href="/logout" className="text-white hover:text-gray-400 px-3 py-2 rounded-md text-xl font-medium">Logout</a>
+                </>
+              )}
             </div>
           </div>
 
@@ -43,8 +57,17 @@ const Navbar = () => {
           <div className="md:hidden">
             {/* Render your mobile menu items here */}
             <div className="px-2 pt-2 pb-3 space-y-1">
-              <a href="#services" className="text-white hover:text-gray-400 block px-3 py-2 rounded-md text-base font-medium">Login</a>
-              <a href="#contact" className="text-white hover:text-gray-400 block px-3 py-2 rounded-md text-base font-medium">Signup</a>
+              {data == null ? (
+                <>
+                  <a href="/login" className="text-white hover:text-gray-400 block px-3 py-2 rounded-md text-base font-medium">Login</a>
+                  <a href="/signup" className="text-white hover:text-gray-400 block px-3 py-2 rounded-md text-base font-medium">Signup</a>
+                </>
+              ) : (
+                <>
+                  <a href="/profile" className="text-white hover:text-gray-400 block px-3 py-2 rounded-md text-base font-medium">{data.Username}</a>
+                  <a href="/logout" className="text-white hover:text-gray-400 block px-3 py-2 rounded-md text-base font-medium">Logout</a>
+                </>
+              )}
             </div>
           </div>
         )}

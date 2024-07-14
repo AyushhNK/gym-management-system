@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import background from "../../assets/background.avif";
+import Navbar from '../NavFoo/Navbar'
+import LoginContext from '../contexts/logincontext'
+import {useNavigate} from 'react-router-dom'
 
 const Login = () => {
+  const {data,setData}=useContext(LoginContext)
   const [Username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate=useNavigate()
 
   const handleSubmit = async (e) => {
   e.preventDefault();
 
   const data = {
-    username: Username,  // assuming 'Username' is a state variable
-    password: password  // assuming 'password' is a state variable
+    username: Username,  
+    password: password  
   };
 
   try {
@@ -24,6 +29,8 @@ const Login = () => {
 
     if (response.ok) {
       const responseData = await response.json();
+      setData(responseData)
+      navigate('/')
       console.log('Login successful:', responseData);
       // Handle successful login (e.g., redirect to a different page)
     } else {
@@ -38,6 +45,7 @@ const Login = () => {
 
 
   return (
+    <>
     <div
       className="min-h-screen flex items-center justify-center"
       style={{
@@ -84,6 +92,7 @@ const Login = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 
