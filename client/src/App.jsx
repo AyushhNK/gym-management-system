@@ -8,6 +8,8 @@ import Homepage from './components/homepage/homepage';
 import UserProfile from './components/homepage/profile';
 import LogoLoader from './components/loader/logoloader';
 import Loader from './components/loader/loader'
+import GymClassList from './components/class/gymclass'
+import BookingList from './components/class/booked'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginContext from './components/contexts/logincontext'
 
@@ -77,6 +79,16 @@ function App() {
               <Route path="/trainers" element={
               <>
                 <TrainerComponent/>
+              </>
+              }></Route>
+              <Route path="/classes" element={
+              <>
+                <GymClassList/>
+              </>
+              }></Route>
+              <Route path="/bookings" element={
+              <>
+                <BookingList/>
               </>
               }></Route>
           </Routes>
