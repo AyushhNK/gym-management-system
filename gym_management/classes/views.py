@@ -30,7 +30,26 @@ class BookingView(APIView):
 
     def post(self, request):
         serializer = BookingSerializer(data=request.data)
+        
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            gym_class_id = serializer.validated_data['gym_class'].id
+            try:
+                gym_class = GymClass.objects.select_for_update().get(id=gym_class_id)
+                if gym_class.capacity > 0:
+                    gym_class.capacity -= 1
+                    gym_class.save()
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_201_CREATED)
+                else:
+                    return Response({'error': 'Gym class is already fully booked.'}, status=status.HTTP_400_BAD_REQUEST)
+            except GymClass.DoesNotExist:
+                return Response({'error': 'Gym class not found.'}, status=status.HTTP_404_NOT_FOUND)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, booking_id):
+        try:
+            booking = Booking.objects.get(id=booking_id)
+            booking.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Booking.DoesNotExist:
+            return Response({'error': 'Booking not found'}, status=status.HTTP_404_NOT_FOUND)
