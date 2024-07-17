@@ -12,7 +12,6 @@ const Homepage = () => {
             <h2 className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl ">Welcome to our Gym</h2>
             <p className="text-xl text-gray-800 font-bold tracking-wide uppercase mt-2 ">
               Achieve Your Fitness Goals
-              <Link to="bookings">book</Link>
             </p>
             <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit ex obcaecati natus eligendi delectus, cum deleniti sunt in labore nihil quod quibusdam expedita nemo.

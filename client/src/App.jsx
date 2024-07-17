@@ -73,7 +73,7 @@ function App() {
               }></Route>
               <Route path="/profile" element={
               <>
-                <UserProfile user={user}/>
+                <UserProfile user={data}/>
               </>
               }></Route>
               <Route path="/trainers" element={

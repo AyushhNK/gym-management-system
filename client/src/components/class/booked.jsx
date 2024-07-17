@@ -7,13 +7,12 @@ const BookingsList = () => {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/booking')
+    fetch(`http://localhost:8000/api/booking?user=${data.User_Id}`)
       .then(response => response.json())
       .then(data => setBookings(data))
       .catch(error => console.error('Error fetching bookings:', error));
   }, []);
 
-  const userBookings = bookings.filter(booking => booking.user === data.User_Id);
 
   const removeBooking = async (bookingId) => {
     try {
@@ -27,17 +26,17 @@ const BookingsList = () => {
   };
 
   return (
-    <div className="container mx-auto px-4">
-      <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">Bookings List</h1>
-      <div className="flex flex-col space-y-4">
-        {userBookings.map(booking => (
+    <div className="container mx-auto px-4 py-6">
+      <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Bookings List</h1>
+      <div className="space-y-4">
+        {bookings.map(booking => (
           <div key={booking.id} className="bg-white shadow-md rounded-lg overflow-hidden">
-            <div className="p-4 flex flex-col sm:flex-row sm:justify-between items-start sm:items-center">
-              <div>
+            <div className="p-6 flex flex-col sm:flex-row sm:justify-between sm:items-center">
+              <div className="flex flex-col space-y-2">
                 <p className="text-lg font-semibold text-gray-800">Class Name: {booking.gym_class_name}</p>
                 <p className="text-gray-600">Booked At: {new Date(booking.booked_at).toLocaleString()}</p>
-                <p className="text-gray-600">User ID: {booking.user}</p>
-                <p className="text-gray-600">Gym Class ID: {booking.gym_class}</p>
+                <p className="text-gray-600">Start Time: {new Date(booking.start_time).toLocaleString()}</p>
+                <p className="text-gray-600">End Time: {new Date(booking.end_time).toLocaleString()}</p>
               </div>
               <button 
                 onClick={() => removeBooking(booking.id)} 

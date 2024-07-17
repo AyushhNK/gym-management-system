@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import LoginContext from '../contexts/logincontext';
-import {Link} from 'react-router-dom'
 
 const Navbar = () => {
-  const { data, setData } = useContext(LoginContext);
+  const { data } = useContext(LoginContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -34,7 +34,16 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
-                  <Link to="/profile" className="text-white hover:text-gray-400 px-3 py-2 rounded-md text-xl font-medium">{data.Username}</Link>
+                  <div className="relative">
+                    <Link to="/profile">
+                      <img
+                        src={data.profile_picture}
+                        alt="Profile"
+                        className="w-10 h-10 rounded-full object-cover"
+                      />
+                    </Link>
+                  </div>
+                  <Link to="/bookings" className="text-white hover:text-gray-400 px-3 py-2 rounded-md text-xl font-medium">Bookings</Link>
                   <a href="/logout" className="text-white hover:text-gray-400 px-3 py-2 rounded-md text-xl font-medium">Logout</a>
                 </>
               )}
@@ -64,8 +73,17 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
-                  <a href="/profile" className="text-white hover:text-gray-400 block px-3 py-2 rounded-md text-base font-medium">{data.Username}</a>
-                  <a href="/logout" className="text-white hover:text-gray-400 block px-3 py-2 rounded-md text-base font-medium">Logout</a>
+                  <div className="flex items-center space-x-3">
+                    <Link to="/profile">
+                      <img
+                        src={data.profile_picture}
+                        alt="Profile"
+                        className="w-10 h-10 rounded-full object-cover"
+                      />
+                    </Link>
+                    <Link to="/bookings" className="text-white hover:text-gray-400 block px-3 py-2 rounded-md text-base font-medium">Bookings</Link>
+                    <a href="/logout" className="text-white hover:text-gray-400 block px-3 py-2 rounded-md text-base font-medium">Logout</a>
+                  </div>
                 </>
               )}
             </div>

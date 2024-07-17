@@ -24,7 +24,12 @@ class GymClassView(APIView):
 
 class BookingView(APIView):
     def get(self, request):
-        bookings = Booking.objects.all()
+        user_id = request.query_params.get('user', None)
+        if user_id:
+            bookings = Booking.objects.filter(user=user_id)
+        else:
+            bookings = Booking.objects.all()
+        
         serializer = BookingSerializer(bookings, many=True)
         return Response(serializer.data)
 
